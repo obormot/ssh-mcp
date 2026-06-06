@@ -382,12 +382,14 @@ export class SSHConnectionManager implements ISSHConnectionManager {
       // Establish connection
       const connectConfig: {
         host: string;
+        port?: number;
         username: string;
         password?: string;
         privateKey?: string;
         passphrase?: string;
       } = {
         host: config.host,
+        port: config.port,
         username: config.username,
       };
 

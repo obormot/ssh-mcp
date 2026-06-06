@@ -27,6 +27,7 @@ export interface MCPSSHServerConfig {
 interface SSHConnectArgs {
   name: string;
   host: string;
+  port?: number;
   username: string;
   password?: string;
   privateKey?: string;
@@ -204,6 +205,10 @@ export class MCPSSHServer {
                   description: "Unique name for the SSH session",
                 },
                 host: { type: "string", description: "Hostname or IP address" },
+                port: {
+                  type: "number",
+                  description: "SSH port number (default: 22)",
+                },
                 username: {
                   type: "string",
                   description: "Username for authentication",
@@ -391,7 +396,7 @@ export class MCPSSHServer {
   private async handleSSHConnect(
     args: SSHConnectArgs,
   ): Promise<{ content: { type: string; text: string }[] }> {
-    const { name: sessionName, host, username, password, privateKey, keyFilePath, passphrase } = args;
+    const { name: sessionName, host, port, username, password, privateKey, keyFilePath, passphrase } = args;
 
     if (!sessionName || !host || !username) {
       throw new Error(
@@ -406,6 +411,7 @@ export class MCPSSHServer {
     const connection = await this.sshManager.createConnection({
       name: sessionName,
       host,
+      port,
       username,
       password,
       privateKey,
