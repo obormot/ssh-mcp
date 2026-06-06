@@ -11,6 +11,7 @@
  */
 
 import { spawn, ChildProcess } from "child_process";
+import * as os from "os";
 import * as path from "path";
 import * as fs from "fs";
 
@@ -154,7 +155,7 @@ describe("MCP Server Stdio Pollution - TDD Reproduction", () => {
       // FAILING TEST: Verify port file creation during server startup
       
       const serverPath = path.join(process.cwd(), "dist/src/mcp-server.js");
-      const portFilePath = path.join(process.cwd(), ".ssh-mcp-server.port");
+      const portFilePath = path.join(os.tmpdir(), ".ssh-mcp-server.port");
       
       // Clean up any existing port file
       try {

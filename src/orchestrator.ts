@@ -10,6 +10,7 @@ import { PortManager } from "./port-discovery.js";
 import { Logger } from "./logger.js";
 import { TerminalSessionStateManager } from "./terminal-session-state-manager.js";
 import * as fs from "fs";
+import * as os from "os";
 import * as path from "path";
 
 export interface OrchestratorConfig {
@@ -122,7 +123,7 @@ export class Orchestrator {
   }
 
   private async writePortToFile(port: number): Promise<void> {
-    const portFilePath = path.join(process.cwd(), ".ssh-mcp-server.port");
+    const portFilePath = path.join(os.tmpdir(), ".ssh-mcp-server.port");
     try {
       await fs.promises.writeFile(portFilePath, port.toString(), "utf8");
     } catch (error) {
@@ -133,7 +134,7 @@ export class Orchestrator {
   }
 
   private async removePortFile(): Promise<void> {
-    const portFilePath = path.join(process.cwd(), ".ssh-mcp-server.port");
+    const portFilePath = path.join(os.tmpdir(), ".ssh-mcp-server.port");
     try {
       await fs.promises.unlink(portFilePath);
     } catch (error) {

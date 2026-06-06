@@ -6,6 +6,7 @@ import { SSHConnectionManager } from "./ssh-connection-manager.js";
 import { TerminalSessionStateManager } from "./terminal-session-state-manager.js";
 import { PortManager } from "./port-discovery.js";
 import * as fs from "fs";
+import * as os from "os";
 import * as path from "path";
 
 // Main execution - MCP server (stdio) + Web server (separate port) in SAME PROCESS
@@ -41,7 +42,7 @@ async function main(): Promise<void> {
   mcpServer.setWebServerPort(webPort);
 
   // Write port file
-  const portFilePath = path.join(process.cwd(), ".ssh-mcp-server.port");
+  const portFilePath = path.join(os.tmpdir(), ".ssh-mcp-server.port");
   await fs.promises.writeFile(portFilePath, webPort.toString(), "utf8");
 
   // Handle graceful shutdown

@@ -16,6 +16,7 @@
  * These integration tests verify REAL process management without any mocking
  */
 import * as fs from "fs";
+import * as os from "os";
 import * as path from "path";
 import { delay } from "../../test-utils";
 import { MCPServerManager } from "./mcp-server-manager";
@@ -26,7 +27,7 @@ describe("MCP Server Lifecycle - Integration Tests", () => {
 
   beforeEach(() => {
     // Clean up any leftover port files from previous tests
-    const portFile = path.join(process.cwd(), ".ssh-mcp-server.port");
+    const portFile = path.join(os.tmpdir(), ".ssh-mcp-server.port");
     try {
       fs.unlinkSync(portFile);
     } catch {
@@ -60,7 +61,7 @@ describe("MCP Server Lifecycle - Integration Tests", () => {
       expect(serverProcess?.pid).toBeGreaterThan(0);
       
       // Verify server created port file
-      const portFile = path.join(process.cwd(), ".ssh-mcp-server.port");
+      const portFile = path.join(os.tmpdir(), ".ssh-mcp-server.port");
       expect(fs.existsSync(portFile)).toBe(true);
       
       const portContent = fs.readFileSync(portFile, "utf8");
@@ -117,7 +118,7 @@ describe("MCP Server Lifecycle - Integration Tests", () => {
       serverManager = new MCPServerManager();
       await serverManager.start();
       
-      const portFile = path.join(process.cwd(), ".ssh-mcp-server.port");
+      const portFile = path.join(os.tmpdir(), ".ssh-mcp-server.port");
       expect(fs.existsSync(portFile)).toBe(true);
       
       // Stop the server
@@ -165,7 +166,7 @@ describe("MCP Server Lifecycle - Integration Tests", () => {
         expect(serverManager.isRunning()).toBe(true);
         
         // Verify port file exists
-        const portFile = path.join(process.cwd(), ".ssh-mcp-server.port");
+        const portFile = path.join(os.tmpdir(), ".ssh-mcp-server.port");
         expect(fs.existsSync(portFile)).toBe(true);
         
         // Stop

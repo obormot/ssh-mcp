@@ -62,7 +62,7 @@ describe('Monitoring URL Failure Debug', () => {
       // Step 5: Check for .ssh-mcp-server.port file
       console.log('\nStep 5: Checking for port file...');
       try {
-        const portFileContent = execSync('cat .ssh-mcp-server.port 2>/dev/null || echo "Port file not found"', { });
+        const portFileContent = execSync(`cat ${require('os').tmpdir()}/.ssh-mcp-server.port 2>/dev/null || echo "Port file not found"`, { });
         console.log(`Port file content: ${portFileContent.toString().trim()}`);
       } catch (error) {
         console.log(`Could not read port file: ${error}`);
