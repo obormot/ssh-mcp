@@ -6,6 +6,8 @@ import { ErrorResponse } from "./types.js";
 import { PortManager } from "./port-discovery.js";
 import { TerminalSessionStateManager, SessionBusyError } from "./terminal-session-state-manager.js";
 import { Logger, log } from "./logger.js";
+import * as os from "os";
+import * as path from "path";
 import * as http from "http";
 import express from "express";
 import { WebSocketServer } from "ws";
@@ -68,7 +70,7 @@ export class WebServerManager {
     this.terminalStateManager = terminalStateManager || new TerminalSessionStateManager();
 
     // Initialize logger with 'file' transport for safe console output in web server context
-    Logger.initialize('file', 'WebServer', 'logs/web-server.log');
+    Logger.initialize('file', 'WebServer', path.join(os.tmpdir(), 'ssh-mcp-web-server.log'));
     
     this.app = express();
 

@@ -12,6 +12,7 @@
  */
 import { spawn, ChildProcess } from "child_process";
 import * as fs from "fs";
+import * as os from "os";
 import * as path from "path";
 
 export interface MCPServerConfig {
@@ -366,7 +367,7 @@ export class MCPServerManager {
 
     // Clean up port file since SIGKILL prevents MCP server's own cleanup
     try {
-      const portFilePath = path.join(process.cwd(), ".ssh-mcp-server.port");
+      const portFilePath = path.join(os.tmpdir(), ".ssh-mcp-server.port");
       if (fs.existsSync(portFilePath)) {
         await fs.promises.unlink(portFilePath);
       }

@@ -22,6 +22,7 @@ import { PreWebSocketCommandExecutor } from './pre-websocket-command-executor';
 import { WebSocketConnectionDiscovery } from './websocket-connection-discovery';
 import { InitialHistoryReplayCapture } from './initial-history-replay-capture';
 import { PostWebSocketCommandExecutor } from './post-websocket-command-executor';
+import * as os from 'os';
 import * as path from 'path';
 
 describe('ComprehensiveResponseCollector Integration', () => {
@@ -33,7 +34,7 @@ describe('ComprehensiveResponseCollector Integration', () => {
 
   beforeEach(() => {
     // Clean up any existing server processes
-    const portFilePath = path.join(process.cwd(), '.ssh-mcp-server.port');
+    const portFilePath = path.join(os.tmpdir(), '.ssh-mcp-server.port');
     try {
       require('fs').unlinkSync(portFilePath);
     } catch {

@@ -7,6 +7,7 @@
  */
 
 import * as fs from 'fs';
+import * as os from 'os';
 import * as path from 'path';
 
 export type LogLevel = 'debug' | 'info' | 'warn' | 'error';
@@ -38,7 +39,7 @@ export class Logger {
     this.context = context;
     
     if (transport === 'file') {
-      this.logFilePath = logFilePath || path.join(process.cwd(), 'logs', 'app.log');
+      this.logFilePath = logFilePath || path.join(os.tmpdir(), 'ssh-mcp-app.log');
       this.ensureLogDirectory();
     }
   }
