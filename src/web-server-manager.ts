@@ -9,6 +9,8 @@ import { Logger, log } from "./logger.js";
 import * as os from "os";
 import * as path from "path";
 import * as http from "http";
+import * as path from "path";
+import { fileURLToPath } from "url";
 import express from "express";
 import { WebSocketServer } from "ws";
 
@@ -151,8 +153,8 @@ export class WebServerManager {
   }
 
   private setupExpressRoutes(): void {
-    // Serve static files for web interface
-    const staticPath = "./static";
+    // Serve static files for web interface — resolve relative to this file, not CWD
+    const staticPath = path.join(path.dirname(fileURLToPath(import.meta.url)), "../static");
     this.app.use(express.static(staticPath));
 
     // Handle root route
@@ -220,7 +222,7 @@ export class WebServerManager {
                 cursor: '#ffffff',
                 selection: '#ffffff'
             },
-            fontSize: 16,
+            fontSize: 10,
             fontFamily: 'Monaco, Menlo, "Ubuntu Mono", monospace',
             cursorBlink: true
         });
