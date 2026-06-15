@@ -83,7 +83,7 @@ The installation script handles port discovery, cleanup of existing configuratio
 
 | Tool | Purpose | Required Parameters |
 |------|---------|-------------------|
-| `ssh_connect` | Establish SSH connection | `name`, `host`, `username`, auth method* |
+| `ssh_connect` | Establish SSH connection | `name`, `host`, `username`, auth method*; optional `port` (default: 22) |
 | `ssh_exec` | Execute commands on remote server | `sessionName`, `command` |
 | `ssh_list_sessions` | List all active SSH sessions | None |
 | `ssh_get_monitoring_url` | Get browser monitoring URL | `sessionName` |
@@ -113,6 +113,9 @@ ssh_connect name="myserver" host="example.com" username="user" privateKey="-----
 
 # Option E: Direct private key content (encrypted with passphrase)
 ssh_connect name="myserver" host="example.com" username="user" privateKey="-----BEGIN OPENSSH PRIVATE KEY-----..." passphrase="keypassword"
+
+# Option F: Non-default SSH port
+ssh_connect name="myserver" host="example.com" username="user" keyFilePath="~/.ssh/id_ed25519" port=2222
 
 # 2. Execute commands
 ssh_exec sessionName="myserver" command="ls -la"
