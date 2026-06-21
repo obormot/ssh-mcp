@@ -8,9 +8,8 @@ import { TerminalSessionStateManager, SessionBusyError } from "./terminal-sessio
 import { Logger, log } from "./logger.js";
 import * as os from "os";
 import * as path from "path";
-import * as http from "http";
-import * as path from "path";
 import { fileURLToPath } from "url";
+import * as http from "http";
 import express from "express";
 import { WebSocketServer } from "ws";
 
